@@ -1,0 +1,183 @@
+<% include componentes/header %>
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">Inicio</a>
+                </li>
+                <li class="">Nueva consulta</li>
+            </ul>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#estudiantes">Estudiantes</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#profesores">Autoridades</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="estudiantes" class="tab-pane fade in active">
+                    <h3>Estudiantes</h3>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <label for="">Nivel</label>
+                                <select name="nivel"  class="form-control" id="nivel" onchange="Paralelos()" required>
+                                    <option value="" disabled selected>Seleccionar..</option>
+                                    <% for(var i = 0; i < nivel.length ; i++){ %>
+                                      <option value=<%-  '"' + nivel[i].nombreNivel + '"' %> > <%= nivel[i].nombreNivel %> </option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <label for="">Paralelo</label>
+                                <select name="paralelo"  class="form-control" id="paralelo" >
+                                </select>
+                            </div>
+                            <div class="col-md-6 ">
+                                <button class="btn btn-primary btn-sm  " style="margin-top: 25px;" onclick="LoadTable()"><span class="fa fa-refresh"></span> Cargar</button>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-12 form-group" >
+                            <div class="table-responsive">
+                                <div class="col-md-12">
+                                    <table class="table table-hover  table-inverse" id="dynamic-table"  >
+                                        <thead class="thead-inverse">
+                                        <tr >
+                                            <th style="background: #428BCA; color: white; font-weight: 100">Acciones</th>
+                                            <th style="background: #428BCA; color: white; font-weight: 100">Nombre</th>
+                                            <th style="background: #428BCA; color: white; font-weight: 100">Apellido</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tableStudent">
+                                        <% for(var i = 0; i < estudiantes.length ; i++){ %>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-warning btn-xs" style="padding: 1px;" href=<%- '" /formAttention/loadPerson?q=' + estudiantes[i].nombrePersona +'-'+ estudiantes[i].apellidoPersona + '"' %> ><span class="fa fa-stethoscope"> Seleccionar</span></a>
+                                            </td>
+                                            <td><%= estudiantes[i].nombrePersona %></td>
+                                            <td><%= estudiantes[i].apellidoPersona %></td>
+                                        </tr>
+                                        <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="profesores" class="tab-pane fade">
+                    <h3>Autoridades </h3>
+                    <div class="table-responsive ">
+                        <table class="table table-hover  table-inverse" id="dynamic-table-2" style="width: 100%">
+                           <thead class="thead-inverse">
+                             <tr>
+                                <th style="background: #428BCA; color: white; font-weight: 100">Acciones</th>
+                                <th style="background: #428BCA; color: white; font-weight: 100">Nombre</th>
+                                <th style="background: #428BCA; color: white; font-weight: 100">Apellido</th>
+                             </tr>
+                           </thead>
+                            <tbody>
+                                <% for(var i = 0; i < profesores.length ; i++){ %>
+                                    <tr>
+                                        <td>
+                                            <a class="btn btn-warning btn-xs" style="padding: 1px;" href=<%- '" /formAttention/loadPerson?q=' + profesores[i].nombrePersona +'-'+ profesores[i].apellidoPersona + '"' %> ><span class="fa fa-stethoscope"> Seleccionar</span></a>
+                                        </td>
+                                        <td><%= profesores[i].nombrePersona %></td>
+                                        <td><%= profesores[i].apellidoPersona %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include componentes/footer %>
+<script>
+    // --------------------------------------------------------------------------------
+    let myTable = $('#dynamic-table')
+        .DataTable({
+            "paging": true,
+            "language": {
+                "lengthMenu": "Abrir _MENU_ Elementos",
+                "zeroRecords": "Ningún elemento encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "",
+                "search":"Buscar",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+            }
+        });
+    if (<%- error %>){
+        swal("Lo sentimos", "Ocurrio un error en la base de datos", "error");
+    }
+    function Paralelos() {
+        $.ajax({
+            url: '/search/loadParalel',
+            type: 'POST',
+            cache: false,
+            data: { nivel : $('#nivel').val() } ,
+            success: ( paralelos ) => {
+              $('#paralelo').html(paralelos);
+            },
+            error: ( err ) => {
+                swal("Lo sentimos", "Ocurrio un error en la base de datos", "error");
+            }
+        });
+    }
+    function LoadTable() {
+        $.ajax({
+            url: '/search/loadTable',
+            type: 'POST',
+            cache: false,
+            data: { nivel : $('#nivel').val(), paralelo: $('#paralelo').val() } ,
+            success: ( students ) => {
+                myTable.clear().draw();
+                students.forEach(function (student) {
+                    myTable.row.add( [
+                        `<a href="/formAttention/loadPerson?q=${student.nombrePersona}-${student.apellidoPersona}" class="btn btn-warning btn-xs" style="padding: 1px;"><span class="fa fa-stethoscope"> Seleccionar</span></a>`,
+                        student.nombrePersona,
+                        student.apellidoPersona
+                    ] ).draw( false );
+                });
+            },
+            error: ( err ) => {
+                swal("Lo sentimos", "Ocurrio un error en la base de datos", "error");
+            }
+        });
+    }
+
+    let myTableProfesores = $('#dynamic-table-2')
+        .DataTable({
+            "paging": true,
+            "language": {
+                "lengthMenu": "Abrir _MENU_ Elementos",
+                "zeroRecords": "Ningún elemento encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "",
+                "search":"Buscar",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+            }
+        });
+
+
+</script>

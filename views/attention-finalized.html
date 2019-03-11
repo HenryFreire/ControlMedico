@@ -1,0 +1,49 @@
+<% include componentes/header %>
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">Inicio</a>
+                </li>
+                <li class="">Atención Finalizada</li>
+            </ul>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                  <span style="font-weight: 600">Atención Finalizada <i class="fa fa-check-circle fa-lg"></i></span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class=" " >  NOMBRE: &nbsp; <%- paciente[1] %></h6>
+                            <h6 class=" " >  SINTOMAS: &nbsp;  <%- paciente[4] %></h6>
+                            <h6 class=" " >  DIAGNOSTICO: &nbsp;  <%- paciente[5] %></h6>
+                            <h6>TRATAMIENTO: &nbsp;  <%- paciente[6] %></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/search" class="btn btn-success btn-sm"> <i class="fa fa-check"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Apertura en el header -->
+
+
+
+
+
+<% include componentes/footer %>
+<script>
+    if (<%- error %>){
+        error('fa fa-times-circle', 'Ocurrio un error en la base de datos');
+    }
+    if (<%- listo %>){
+        success('fa fa-check-circle ', 'Guardado Exitosamente!');
+    }
+</script>

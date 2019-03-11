@@ -1,0 +1,126 @@
+<% include componentes/header %>
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">Inicio</a>
+                </li>
+                <li class="">Consultas</li>
+            </ul>
+        </div>
+        <div class="page-header">
+            <h1>
+                Consultas
+                <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                    Lista de Consultas
+                </small>
+            </h1>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <table class="table table-condensed" id="dynamic-table">
+                <thead>
+                <tr>
+                    <th style="background: rgb(66, 139, 202); color: white; font-weight: 100;">Nombres</th>
+                    <th style="background: rgb(66, 139, 202); color: white; font-weight: 100;">Fecha</th>
+                    <th style="background: rgb(66, 139, 202); color: white; font-weight: 100;">Hora</th>
+                    <th style="background: rgb(66, 139, 202); color: white; font-weight: 100;">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i  < atenciones.length; i++  ){ %>
+                <tr>
+                    <td><%= atenciones[i].nombre %></td>
+                    <td><%= atenciones[i].fecha %></td>
+                    <td><%= atenciones[i].hora%></td>
+                    <td id=<%- "'"+ atenciones[i].id +"'"%>>
+                    <a class="btn btn-primary btn-xs" title="Ver detlles" onclick=<%- "verDetalle('"+ atenciones[i].id +"')"%>>
+                    <i class="ace-icon fa fa-eye bigger-110 icon-only"></i>
+                    </a>
+                    <a class="btn btn-danger btn-xs" title="Eliminar" onclick=<%- "eliminar('"+ atenciones[i].id +"')"%>>
+                    <i class="ace-icon fa fa-trash-o bigger-110 icon-only"></i>
+                    </a>
+                    </td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <!-- Modal de ver atención -->
+            <div class="modal fade" id="detalles" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Detalles de la Consulta</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="diagnostico">Sintomas</label>
+                            <textarea name="sintomas" id="sintomas" class="form-control" rows="3" readonly></textarea>
+                            <label for="diagnostico">Diagnóstico</label>
+                            <textarea name="diagnostico" id="diagnostico" class="form-control" rows="3" readonly></textarea>
+                            <label for="tratamiento">Tratamiento</label>
+                            <textarea name="tratamiento" id="tratamiento" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </div>
+    </div>
+</div><!-- Apertura en el header -->
+<% include componentes/footer %>
+<script>
+    let myTable = $('#dynamic-table')
+        .DataTable({
+            "paging": true,
+            "language": {
+                "lengthMenu": "Abrir _MENU_ Elementos",
+                "zeroRecords": "Ningún elemento encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "",
+                "search":"Buscar",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+            }
+        });
+    function verDetalle(id) {
+       console.log(id);
+       $.get('/consultation/verId?q='+id, function(response) {
+           if(response === 'error'){
+               error('fa fa-times-circle', 'Ocurrio un error en la base de datos');
+           }else {
+               $('#sintomas').text(response[0].sintomas);
+               $('#diagnostico').text(response[0].diagnostico);
+               $('#tratamiento').text(response[0].tratamiento);
+               $('#detalles').modal("show");
+           }
+       });
+    }
+
+    function eliminar(id) {
+        let myCallback = function (choice) {
+            if (choice) {
+                $.get('/consultation/delete?q='+id, function ( respose ) {
+                    if ( respose === "error" ) {
+                        error('fa fa-times-circle', 'Error en la base de datos');
+                    } else {
+                        myTable.row($('#'+id).parents('tr')).remove().draw();
+                        success('fa fa-check-circle ', 'Eliminado correctamente');
+                    }
+                })
+            }
+        };
+        notif_confirm({'message': 'Borrar Atención', 'textaccept': 'Si!', 'textcancel': 'No', 'callback': myCallback});
+    }
+</script>

@@ -1,0 +1,66 @@
+<% include componentes/header %>
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Inicio</a>
+				</li>
+				<li class="">configuración</li>
+			</ul>
+		</div>
+        <div class="page-header">
+	      <h1>
+		    Configuración de Cuenta
+		    <small>
+			  <i class="ace-icon fa fa-angle-double-right"></i>
+			  Cambiar contraseña
+		   </small>
+	      </h1>
+        </div>
+        <div class="">
+            <div class="panel-body">
+                <form action="/configuration/changePassword" method="POST">
+                    <div class="col-md-6 col-sm-6 form-group">
+                        <label for="password1" class="control-label no-padding-right">Contraseña actual</label>
+                        <input type="password" class="form-control" name="password1" placeholder="Ingrese su clave actual" required>
+                    </div>
+                    <div class="col-md-6 col-sm-6 form-group">
+                        <label for="password2" class="control-label no-padding-right">Contraseña nueva</label>
+                        <input type="password" class="form-control" name="password2" placeholder="Ingrese su nueva clave" required>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button  class="btn btn-danger btn-sm" ><i class="fa fa-unlock-alt"></i> Listo </button> <span class="msg"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-2 col-sm-6 col-sm-offset-3">
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">
+                </button>
+                <strong>
+                    <i class="fa fa-info-circle "></i> Información!
+                </strong>
+                Una vez cambiada su contraseña ya podra iniciar sesion la proxima vez con su nueva contraseña
+            </div>
+        </div>
+
+    </div>
+</div><!-- Apertura en el header -->
+       <% include componentes/footer %>
+        <script>
+            if (<%- error %>){
+                error('fa fa-times-circle', 'Ocurrio un error en la base de datos');
+            }
+
+            if (<%- listo %>){
+                success('fa fa-check-circle ', 'Contraseña cambiada exitosamente!');
+            }
+
+            if (<%- warning %>){
+                error('fa fa-times-circle', 'Datos incorrectos');
+            }
+
+        </script>

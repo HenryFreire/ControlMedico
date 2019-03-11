@@ -1,0 +1,634 @@
+<% include componentes/header %>
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">Inicio</a>
+                </li>
+                <li class="">Administración</li>
+            </ul>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                   <h5>PACIENTE:  <%- paciente.dataMedical[0].nombrePersona%> <%- paciente.dataMedical[0].apellidoPersona%></h5>
+                </div>
+                <div class="panel-body">
+                    <h4>Datos del Paciente</h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="infobox infobox-red">
+                                <div class="infobox-icon">
+                                    <i class="ace-icon fa fa-tint"></i>
+                                </div>
+
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number"><%-paciente.dataMedical[0].nombreGrupoSanguineo %></span>
+                                    <div class="infobox-content">Tipo de Sangre</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-blue">
+                                <div class="infobox-icon">
+                                    <i class="ace-icon fa fa-male"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number"><%-paciente.dataMedical[0].tallaPersona %> m</span>
+                                    <div class="infobox-content">Talla</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-green">
+                                <div class="infobox-icon">
+                                    <i class="ace-icon fa fa-balance-scale "></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number"><%-paciente.dataMedical[0].pesoPersona %> Kg</span>
+                                    <div class="infobox-content">Peso</div>
+                                </div>
+                            </div>
+
+                            <div class="infobox infobox-orange">
+                                <div class="infobox-icon">
+                                    <i class="ace-icon fa fa-phone-square "></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number"><%= paciente.dataMedical[0].telfDomicilioPersona %> </span>
+                                    <div class="infobox-content">Teléfono Tutor</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-pink">
+                                <div class="infobox-icon">
+                                    <i class="ace-icon fa fa-mobile"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number"><%-paciente.dataMedical[0].telfCelularPersona %> </span>
+                                    <div class="infobox-content">Celular Tutor</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-info btn-sm " data-toggle="modal" data-target="#paciente"><i class="fa fa-pencil-square"></i> Actualizar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Modal Para Editar Datos Del Paciente -->
+                        <div class="modal fade" id="paciente" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Actualizar datos del paciente</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="peso">Peso:</label>
+                                        <input type="number" step="00.01" min="0" class="form-control" id="peso" value=<%- "'" + paciente.dataMedical[0].pesoPersona + "'" %> required>
+                                        <label for="talla">Talla:</label>
+                                        <input type="number" step="00.01" min="0" class="form-control" id="talla" value=<%- "'" + paciente.dataMedical[0].tallaPersona + "'" %> required>
+                                        <label for="tipoSangre">Grupo sanguinio</label>
+                                        <select name="tipoSangre" id="tipoSangre" class="form-control">
+                                            <option value="A POSITIVO">A POSITIVO</option>
+                                            <option value="A NEGATIVO">A NEGATIVO</option>
+                                            <option value="B POSITIVO">B POSITIVO</option>
+                                            <option value="B NEGATIVO">B NEGATIVO</option>
+                                            <option value="AB POSITIVO">AB POSITIVO</option>
+                                            <option value="AB NEGATIVO">AB NEGATIVO</option>
+                                            <option value="O POSITIVO">O POSITIVO</option>
+                                            <option value="O NEGATIVO">O NEGATIVO</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary btn-sm" id="btnDatosPaciente">Actualizar</button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Salir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Del Modal -->
+                        <div class="col-md-9">
+                            <!--- --------------------------------------->
+                            <div class="col-lg-4 col-md-12">
+                                <div class="widget-box collapsed">
+                                    <div class="widget-header">
+                                        <h5 class="widget-title">
+                                            Antecedentes
+                                            <span class="label label-info arrowed-in" id="lblAnt"><%- paciente.antecedents.length%></span>
+                                        </h5>
+                                        <div class="widget-toolbar">
+                                            <a href="#" onclick="NewAntecedent()" >
+                                                <i class="ace-icon fa fa-plus green"></i>
+                                            </a>
+                                            <a href="#" class="" id="btnAntecedente">
+                                                <i class="ace-icon fa fa-trash-o  red"></i>
+                                            </a>
+                                            <a href="#" data-action="collapse">
+                                                <i class="ace-icon fa fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main" style="overflow-y: scroll; height:150px;">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                <tr>
+                                                    <th style="font-weight: 100;"><i>Nombre</i></th>
+                                                    <th style="font-weight: 100;"><i>Tipo</i></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbAntecedente">
+                                                    <% for(let i = 0; i<paciente.antecedents.length ; i++) { %>
+                                                        <tr>
+                                                            <td><%- paciente.antecedents[i].antecedente%></td>
+                                                            <td><%- paciente.antecedents[i].tipo%></td>
+                                                        </tr>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---------------------------------------------------------->
+                            <div class="col-lg-4 col-md-12">
+                                <div class="widget-box collapsed">
+                                    <div class="widget-header">
+                                        <h5 class="widget-title">
+                                            Alergias
+                                            <span class="label label-success arrowed-in" id="lblAle"><%- paciente.allergies.length %></span>
+                                        </h5>
+                                        <div class="widget-toolbar">
+                                            <a href="#" onclick="newAllergie()">
+                                                <i class="ace-icon fa fa-plus green"></i>
+                                            </a>
+                                            <a href="#" class="" id="btnAlergia">
+                                                <i class="ace-icon fa fa-trash-o  red"></i>
+                                            </a>
+                                            <a href="#" data-action="collapse">
+                                                <i class="ace-icon fa fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main" style="overflow-y: scroll; height:150px;">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                <tr>
+                                                    <th style="font-weight: 100;"><i>Tipo</i></th>
+                                                    <th style="font-weight: 100;"><i>Tratamiento</i></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbAlergia">
+                                                    <% for(let i = 0; i<paciente.allergies.length ; i++) { %>
+                                                        <tr>
+                                                            <td><%- paciente.allergies[i].alergia%></td>
+                                                             <td><%- paciente.allergies[i].tratamiento%></td>
+                                                         </tr>
+                                                    <% } %>
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------------------------------------------>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="widget-box collapsed">
+                                    <div class="widget-header">
+                                        <h6 class="widget-title" >
+                                            Enfermedades
+                                            <span class="label label-danger arrowed-in" id="lblEnf"><%- paciente.diseases.length%></span>
+                                        </h6>
+                                        <div class="widget-toolbar">
+                                            <a href="#" onclick="newDisease()">
+                                                <i class="ace-icon fa fa-plus green"></i>
+                                            </a>
+                                            <a href="#"  title="eliminar" id="btnEnfermedad">
+                                                <i class="ace-icon fa fa-trash-o red "></i>
+                                            </a>
+                                            <a href="#" data-action="collapse">
+                                                <i class="ace-icon fa fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main" style="overflow-y: scroll; height:150px;">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                <tr>
+                                                    <th style="font-weight: 100;"><i>Tipo</i></th>
+                                                    <th style="font-weight: 100;"><i>Tratamiento</i></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbEnfermedad">
+                                                <% for(let i = 0; i<paciente.diseases.length ; i++) { %>
+                                                    <tr>
+                                                        <td><%- paciente.diseases[i].enfermedad%></td>
+                                                        <td><%- paciente.diseases[i].tratamiento%></td>
+                                                    </tr>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="../formAttention/newAttention" method="POST">
+                                <input type="hidden" id="idPaciente" name="idPaciente" value=<%- '"' + paciente.dataMedical[0].idPersona + '"' %> >
+                                <input type="hidden"  name="nombre" value=<%- '"' + paciente.dataMedical[0].nombrePersona  +' '+ paciente.dataMedical[0].apellidoPersona + '"' %> >
+                                <div class="col-md-12">
+                                    <h3>Datos de Atención</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="sintomas" class="control-label no-padding-right">Síntomas</label>
+                                    <br>
+                                    <input type="text" name="sintomas" placeholder="dolor, fiebre," id="tags-sintomas" data-role="tagsinput" class="form-control" style="width: 100%;"/>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="nombre" class="control-label no-padding-right">Diagnóstico</label>
+                                    <textarea placeholder="Ingrese el diagnostico del paciente" name="diagnostico" id="diagnostico" cols="30" rows="2" class="form-control" ></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="nombre" class="control-label no-padding-right">Tratamiento</label>
+                                    <textarea name="tratamiento" placeholder="Tratamiento del pacienta" id="tratamiento" cols="30" rows="2" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="nombre" class="control-label no-padding-right">Categoría</label>
+                                    <select name="categoria" id="listaEnfermedades"  class="form-control" >
+                                        <!-- Enfermedades de la CIe-10 -->
+                                    </select>
+                                </div>
+                                <div class="col-md-12 ">
+                                    <br>
+                                    <button class="btn btn-lg btn-success btn-sm" id="guardarConsulta">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Guardar
+                                    </button>
+                                    <button class="btn btn-lg btn-info btn-sm">
+                                        <i class="ace-icon fa fa-times-circle"></i>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Apertura en el header -->
+
+<% include componentes/footer %>
+<script>
+    if (<%- error %>){
+        error('fa fa-times-circle','Error en la base de datos')
+    }
+</script>
+<script>
+ swal.setDefaults({
+     input: 'text',
+     confirmButtonText: 'Next &rarr;',
+     showCancelButton: true,
+     animation: true,
+     progressSteps: ['1', '2']
+ });
+ /*-------------------------------------------------------*/
+ function NewAntecedent(){
+     let steps = [
+         {
+             title: 'Datos Medicos',
+             text: 'Nombre antecedente',
+             confirmButtonText: 'Siguiente &rarr;',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         },
+         {
+             title: 'Datos Medicos',
+             text: 'Tipo de antecedente',
+             confirmButtonText: 'Guardar',
+             input: 'select',
+             inputOptions: {
+                 '1 PATOLÓGICO': 'PATOLÓGICO',
+                 '2 NO_PATOLÓGICO': 'NO PATOLÓGICO',
+                 '3 HEREDOFAMILIARES': 'HEREDOFAMILIARES',
+                 '4 OTRO': 'OTRO'
+             },
+             inputPlaceholder: 'Seleccionar Tipo',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         }];
+     swal.queue(steps).then(function (result) {
+         let antecedent = result[1].split(' ');
+         let datos = {idPaciente: $('#idPaciente').val(), antecedentNombre: result[0].toUpperCase(), antecedentId: antecedent[0] };
+         console.log(datos);
+         $.post( '/formAttention/newAntecedent',datos, function( data ) {
+            if( data === 'Ya tiene' ){
+                info('fa fa-files-o','Ya existe en el historial')
+            }else if(data === 'error'){
+                error('fa fa-times-circle','Error en la base de datos')
+            }else{
+                success('fa fa-check-circle ', 'Antecedente guardado');
+                let fila = '';
+                fila = `<tr>
+                            <td>${datos.antecedentNombre}</td>
+                            <td>${antecedent[1]}</td>
+                        </tr>`;
+                $('#lblAnt').text( parseInt($('#lblAnt').text()) + 1);
+                $('#tbAntecedente').append(fila);
+            }
+         });
+     });
+ }
+ /*--------------------------------------------------------------------------------*/
+
+ function newAllergie() {
+     let steps = [
+         {
+             title: 'Datos Medicos',
+             text: 'Tipo de alergia',
+             confirmButtonText: 'Siguiente &rarr;',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         },
+         {
+             title: 'Datos Medicos',
+             text: 'Tratamiento de la alergia',
+             confirmButtonText: 'Guardar',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         }];
+     swal.queue(steps).then(function (result) {
+         let datos = {idPaciente: $('#idPaciente').val(), tipo: result[0].toUpperCase(), tratamiento:result[1].toUpperCase()  };
+         console.log(datos)
+         $.post( '/formAttention/newAllergie',datos, function( data ) {
+             if( data === 'Ya tiene' ){
+                 info('fa fa-files-o','Ya existe en el historial')
+             }else if(data === 'error'){
+                 error('fa fa-times-circle','Error en la base de datos')
+             }else{
+                 success('fa fa-check-circle ', 'Alergia guardada');
+                 let fila = '';
+                 fila = `<tr>
+                            <td>${datos.tipo}</td>
+                            <td>${datos.tratamiento}</td>
+                        </tr>`;
+                 $('#lblAle').text( parseInt($('#lblAle').text()) + 1);
+                 $('#tbAlergia').append(fila);
+             }
+         });
+     });
+ }
+ /*-------------------------------------------------------------------------------------------------*/
+
+ function newDisease() {
+     let steps = [
+         {
+             title: 'Datos Medicos',
+             text: 'Tipo de enfermedad',
+             confirmButtonText: 'Siguiente &rarr;',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         },
+         {
+             title: 'Datos Medicos',
+             text: 'Tratamiento de la enfermedad',
+             confirmButtonText: 'Guardar',
+             inputValidator: function (value) {
+                 return new Promise(function (resolve, reject) {
+                     if (value) {
+                         resolve()
+                     } else {
+                         reject('Campo Obligatorio!')
+                     }
+                 })
+             }
+         }];
+     swal.queue(steps).then(function (result) {
+         let datos = {idPaciente: $('#idPaciente').val(), tipo: result[0].toUpperCase(), tratamiento:result[1].toUpperCase()  };
+         console.log(datos)
+         $.post( '/formAttention/newDisease',datos, function( data ) {
+             if( data === 'Ya tiene' ){
+                 info('fa fa-files-o','Ya existe en el historial')
+             }else if(data === 'error'){
+                 error('fa fa-times-circle','Error en la base de datos');
+             }else{
+                 success('fa fa-check-circle ', 'Enfermedad guardada');
+                 let fila = '';
+                 fila = `<tr>
+                            <td>${datos.tipo}</td>
+                            <td>${datos.tratamiento}</td>
+                        </tr>`;
+                 $('#lblEnf').text( parseInt($('#lblEnf').text()) + 1);
+                 $('#tbEnfermedad').append(fila);
+             }
+         });
+     });
+
+ }
+
+/*--------------------------------------------------------------------------------------------------------*/
+
+// eliminar antecedente
+    function deleteAntecedent( nombreAntecedente, nombreTipo ) {
+        let myCallback3 = function ( choice ) {
+            if (choice) {
+                let datos = {
+                    idPaciente: $('#idPaciente').val(),
+                    nombreAntecedente: nombreAntecedente,
+                    nombreTipo: nombreTipo
+                };
+                console.log(datos);
+                $.post('/formAttention/deleteAntecedent', datos, function ( result ) {
+                    if ( result === "error" ) {
+                        error('fa fa-times-circle', 'Error en la base de datos');
+                    } else {
+                        $('.' + result).remove();
+                        $('#btnAntecedente').attr('onclick', '');
+                        $('#lblAnt').text(parseInt($('#lblAnt').text()) - 1);
+                        success('fa fa-check-circle ', 'Antecedente eliminado');
+                    }
+                })
+            }
+        };
+        notif_confirm({'message': 'Borrar Antecedente?', 'textaccept': 'Si!', 'textcancel': 'No', 'callback': myCallback3});
+    }
+
+/* -------------------------------------------------------------------------------------------------------------------------  */
+//Eliminar Alergias
+ function deleteAllergie( nombreAlergia ) {
+     let myCallback2 = function ( choice ) {
+         if (choice) {
+             let datos = {
+                 idPaciente: $('#idPaciente').val(),
+                 nombreAlergia: nombreAlergia
+             };
+             console.log(datos);
+             $.post('/formAttention/deleteAllergie', datos, function ( result ) {
+                 if ( result === "error" ) {
+                     error('fa fa-times-circle', 'Error en la base de datos');
+                 } else {
+                     $('.' + result).remove();
+                     $('#btnAlergia').attr('onclick', '');
+                     $('#lblAle').text(parseInt($('#lblAle').text()) - 1);
+                     success('fa fa-check-circle ', 'Alergia eliminada');
+                 }
+             })
+         }
+     };
+     notif_confirm({'message': 'Borrar Alergia?', 'textaccept': 'Si!', 'textcancel': 'No', 'callback': myCallback2});
+ }
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+
+// Elimnar enfermedad
+ function deleteDisease( nombreEnfermedad ) {
+     let myCallback = function ( choice ) {
+         if (choice) {
+             let datos = {
+                 idPaciente: $('#idPaciente').val(),
+                 nombreEnfermedad: nombreEnfermedad
+             };
+             $.post('/formAttention/deleteDisease', datos, function ( result ) {
+                 if ( result === "error" ) {
+                     error('fa fa-times-circle', 'Error en la base de datos');
+                 } else {
+                     $('.' + result).remove();
+                     $('#btnEnfermedad').attr('onclick', '');
+                     $('#lblEnf').text(parseInt($('#lblEnf').text()) - 1);
+                     success('fa fa-check-circle ', 'Enfermedad eliminada');
+                 }
+             })
+         }
+     };
+     notif_confirm({'message': 'Borrar Enfermedad?', 'textaccept': 'Si!', 'textcancel': 'No', 'callback': myCallback});
+ }
+
+ /*------------------------------------------------------------------------------------------------------------------------------------*/
+
+    //funciones de las tablas
+ $('#tbAntecedente').on( 'click', 'tr', function () {
+     if ( $(this).hasClass('selectAntecedente') ) {
+         $(this).removeClass('selectAntecedente');
+         $('#btnAntecedente').attr('onclick','');
+     }
+     else {
+         $('tr.selectAntecedente').removeClass('selectAntecedente');
+         $(this).addClass('selectAntecedente');
+         $('#btnAntecedente').attr('onclick','deleteAntecedent("'+$('tr.selectAntecedente td').eq(0).html()+'","'+$('tr.selectAntecedente td').eq(1).html()+ '")' );
+     }
+ });
+
+ $('#tbEnfermedad').on( 'click', 'tr', function () {
+     if ( $(this).hasClass('selectEnfermedad') ) {
+         $(this).removeClass('selectEnfermedad');
+         $('#btnEnfermedad').attr('onclick','');
+     }
+     else {
+         $('tr.selectEnfermedad').removeClass('selectEnfermedad');
+         $(this).addClass('selectEnfermedad');
+         $('#btnEnfermedad').attr('onclick','deleteDisease("'+$('tr.selectEnfermedad td').html() +'")');
+     }
+ });
+
+ $('#tbAlergia').on( 'click', 'tr', function () {
+     if ( $(this).hasClass('selectAlergia') ) {
+         $(this).removeClass('selectAlergia');
+         $('#btnAlergia').attr('onclick',')');
+     }
+     else {
+         $('tr.selectAlergia').removeClass('selectAlergia');
+         $(this).addClass('selectAlergia');
+         $('#btnAlergia').attr('onclick','deleteAllergie("'+$('tr.selectAlergia td').html() +'")');
+     }
+ });
+/* --------------------------------------------------------------------------------------------------- */
+ $(document).ready(function(){
+
+   /* CARGAR LAS EMFERMEDADES DE LA CIE-10 */
+   $.get('/formAttention/getCie10',function( response ) {
+     if( response === 'error' ){
+       error('fa fa-times-circle', 'Error en la base de datos');
+     }else{
+        $('#listaEnfermedades').html(response);
+     }
+   });
+   /* CREA EL HISTORIAL DEL PACIENTE SI NO LO TIENE  */
+   $.post('/formAttention/createHistory', {idPaciente: $('#idPaciente').val()} , function( response ) {
+      if( response === 'error' ){
+          error('fa fa-times-circle', 'Error en la base de datos');
+      }else{
+          console.log('OK!', response);
+      }
+   });
+
+
+ });
+
+ $(document).ready(function(){
+     // SELECCIONAR EL TIPO DE SANGRE ACTUAL
+     var tipo = <%- "'" + paciente.dataMedical[0].nombreGrupoSanguineo + "'" %>;
+     $('#tipoSangre option[value="'+ tipo +'"]').attr("selected",true);
+
+ });
+
+</script>
+<script>
+    $('#btnDatosPaciente').on('click', function(){
+        if( $('#peso').val() && $('#talla').val() ){
+          var datosMedicos = {
+            talla: parseFloat($('#talla').val()),
+            peso: parseFloat($('#peso').val()),
+            tipoSangre: $('#tipoSangre').val(),
+            idPersona: $('#idPaciente').val()
+          }
+          console.log('datos: ', datosMedicos);
+          $.post('../formAttention/datosMedicos',datosMedicos, function(response) {
+                if( response === 'error' ){
+                    error('fa fa-times-circle', 'Error en la base de datos');
+                }else{
+                    $('#paciente').modal('hide');
+                    success('fa fa-check-circle ', 'Datos actualizados');
+                }
+          });
+        }else{
+            info('fa fa-exclamation-triangle', 'Complete todos los campos');
+        }
+    });
+</script>
+

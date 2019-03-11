@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="author" content="Henry Paúl Freire Ramirez">
+		<meta name="keywords" content="control médico, La Salle">
+		<meta name="description" content="Proyecto de Vinculación">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>Control Medico</title>
+
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../font-awesome/4.5.0/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+	    <link rel="stylesheet" href="../css/chosen.min.css">
+        <!-- mensajes de alerta -->
+        <link rel="stylesheet" href="../css/sweetalert.css">
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../css/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+        <link rel="stylesheet" href="../css/notifIt.css">
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/jquery.dataTables.css">
+		<link rel="stylesheet" href="../css/bootstrap-tagsinput.css">
+
+
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default  ace-save-state">
+			<div class="navbar-container ace-save-state" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="index.html" class="navbar-brand">
+						<small >
+							Colegio La<i class="fa fa-star-o "></i>Salle
+						</small>
+					</a>
+				</div>
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue dropdown-modal">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src=<%- '"../../images/' + usuario.id +'.jpg"'%> width="50px" height="40px" alt="Jason's Photo" />
+								<span class="user-info">
+									<small><i>Administrador</i></small>
+									<%- usuario.nombre %>
+								</span>
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="/profile/">
+										<i class="ace-icon fa fa-user"></i>
+										Perfil
+									</a>
+								</li>
+								<li>
+									<a href="/configuration/">
+										<i class="ace-icon fa fa-cog"></i>
+										Configuración
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="/logout">
+										<i class="ace-icon fa fa-power-off"></i>
+										Salir
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.loadState('main-container')}catch(e){}
+			</script>
+
+			<div id="sidebar" class="sidebar responsive  ace-save-state">
+				<script type="text/javascript">
+					try{ace.settings.loadState('sidebar')}catch(e){}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<a class="btn btn-warning" href="../search" title="Buscar estudiante">
+							<i class="ace-icon fa fa-search"></i>
+						</a>
+						<a class="btn btn-success" href="../consultation" title="Lista de atenciones">
+							<i class="ace-icon fa fa-list"></i>
+						</a>
+
+						<a class="btn btn-info" href="../profile" title="Editar perfil">
+							<i class="ace-icon fa fa-pencil"></i>
+						</a>
+
+
+						<a class="btn btn-danger" href="../configuration" title="Configuración">
+							<i class="ace-icon fa fa-cogs"></i>
+						</a>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!-- /.sidebar-shortcuts -->
+				<ul class="nav nav-list">
+					<li class="" id="dashboard">
+						<a href="/panel/">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> Administración </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="" id="dashboard">
+						<a href="/search">
+							<i class="menu-icon fa fa fa-user-md "></i>
+							<span class="menu-text"> Nueva Consulta </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="" id="dashboard">
+						<a href="/consultation">
+							<i class="menu-icon fa fa-th-list"></i>
+							<span class="menu-text"> Lista de Consultas </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul><!-- /.nav-list -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+			</div>
+
+			

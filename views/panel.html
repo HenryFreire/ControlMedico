@@ -1,0 +1,326 @@
+<% include componentes/header %>
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Inicio</a>
+				</li>
+				<li class="">Administración</li>
+			</ul>
+		</div>
+		<div class="page-header">
+			<h1 align="center">
+				<i>Bienvenido al Módulo de Control Médico</i>
+			</h1>
+		</div>
+		<br>
+		<div class="container-fluid">
+			<!--<h3 align="center" style="color: #2DCDC1" ><i class=""></i> Bienvenido al Módulo de Control Médico</h3>-->
+			<div class="row col-sm-offset-2" >
+				<form action="../panel/rango" method="post">
+					<div class="col-sm-4" >
+						<label for="fechaInicio">Fecha inicio: </label>
+						<input type="date" class="form-control" name="fechaInicio" max=<%= hoy %> required>
+					</div>
+					<div class="col-sm-4">
+						<label for="fechaFin">Fecha fin: </label>
+						<input type="date" class="form-control" name="fechaFin"  required>
+					</div>
+					<div class="col-sm-2" style="margin-top: 25px;" >
+						<button type="submit" class="btn btn-primary btn-sm " title="imprimir"><i class="fa fa-print "></i> </button>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-sm-10 col-xs-12 col-sm-offset-1">
+				<div style=" width:100%;" >
+					<canvas id="myChart" width= "500" height="150"></canvas>
+				</div>
+			</div>
+			<div class="col-sm-12" id="informeMedico" style="width: 700px;height: 950px; display: none">
+				<h3 align="center">COLEGIO ALFONSO DEL HIERRO LA SALLE <br> DEPARTAMENTO MEDICO</h3>
+				<p align="center">DIRECCIÓN:&nbsp; <%= usuario.direccion %> TELEFONO: &nbsp; <%= usuario.telefono %></p>
+				<p style="" align="right">FECHA: <%= hoy %></p>
+				<p>INFORME  DE ATENCIONES MÉDICAS </p>
+				<div class="row">
+					<p style="text-align: left" class="col-sm-6">SEMANA DEL : <%=inicio%> &nbsp; AL &nbsp; <%=fin%></p>
+				</div>
+				<table class="table table-bordered " style="font-size: 12px;">
+					<% if(enfermedades[0]) { %>
+					<tr>
+						<th>Ciertas enfermedades infecciosas y parasitarias</th>
+						<td><%= JSON.stringify(enfermedades[0]) %></td>
+					</tr>
+					<% } %>
+					<tr></tr>
+					<% if(enfermedades[1]) { %>
+					<tr>
+						<th>Neoplasias</th>
+						<td><%= JSON.stringify(enfermedades[1]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[2]) { %>
+					<tr>
+						<th>Enfermedades de la sangre y de los órganos hematopoyéticos y otros trastornos que afectan el mecanismo de la inmunidad</th>
+						<td><%= JSON.stringify(enfermedades[2]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[3]) { %>
+					<tr>
+						<th>Enfermedades endocrinas, nutricionales y metabólicas</th>
+						<td><%= JSON.stringify(enfermedades[3]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[4]) { %>
+					<tr>
+						<th>Trastornos mentales y del comportamiento</th>
+						<td><%= JSON.stringify(enfermedades[4]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[5]) { %>
+					<tr>
+						<th>Enfermedades del sistema nervioso</th>
+						<td><%= JSON.stringify(enfermedades[5]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[6]) { %>
+					<tr>
+						<th>Enfermedades del ojo y sus anexos</th>
+						<td><%= JSON.stringify(enfermedades[6]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[7]) { %>
+					<tr>
+						<th>Enfermedades del oído y de la apófisis mastoides</th>
+						<td><%= JSON.stringify(enfermedades[7]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[8]) { %>
+					<tr>
+						<th>Enfermedades del sistema circulatorio</th>
+						<td><%= JSON.stringify(enfermedades[8]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[9]) { %>
+					<tr>
+						<th>Enfermedades del sistema respiratorio</th>
+						<td><%= JSON.stringify(enfermedades[9]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[10]) { %>
+					<tr>
+						<th>Enfermedades del aparato digestivo</th>
+						<td><%= JSON.stringify(enfermedades[10]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[11]) { %>
+					<tr>
+						<th>Enfermedades de la piel y el tejido subcutáneo</th>
+						<td><%= JSON.stringify(enfermedades[11]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[12]) { %>
+					<tr>
+						<th>Enfermedades del sistema osteomuscular y del tejido conectivo</th>
+						<td><%= JSON.stringify(enfermedades[12]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[13]) { %>
+					<tr>
+						<th>Enfermedades del aparato genitourinario</th>
+						<td><%= JSON.stringify(enfermedades[13]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[14]) { %>
+					<tr>
+						<th>Embarazo, parto y puerperio</th>
+						<td><%= JSON.stringify(enfermedades[14]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[15]) { %>
+					<tr>
+						<th>Ciertas afecciones originadas en el periodo perinatal</th>
+						<td><%= JSON.stringify(enfermedades[15]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[16]) { %>
+					<tr>
+						<th>Malformaciones congénitas, deformidades y anomalías cromosómicas</th>
+						<td><%= JSON.stringify(enfermedades[16]) %></td>
+					</tr>
+					<% } %><% if(enfermedades[17]) { %>
+					<tr>
+						<th>Síntomas, signos y hallazgos anormales clínicos y de laboratorio, no clasificados en otra parte</th>
+						<td><%= JSON.stringify(enfermedades[17]) %></td>
+					</tr>
+					<% } %><% if(enfermedades[18]) { %>
+					<tr>
+						<th>Traumatismos, envenenamientos y algunas otras consecuencias de causa externa</th>
+						<td><%= JSON.stringify(enfermedades[18]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[19]) { %>
+					<tr>
+						<th>Causas externas de morbilidad y de mortalidad</th>
+						<td><%= JSON.stringify(enfermedades[19]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[20]) { %>
+					<tr>
+						<th>Factores que influyen en el estado de salud y contacto con los servicios de salud</th>
+						<td><%= JSON.stringify(enfermedades[20]) %></td>
+					</tr>
+					<% } %>
+					<% if(enfermedades[21]) { %>
+					<tr>
+						<th>Códigos para situaciones especiales</th>
+						<td><%= JSON.stringify(enfermedades[21]) %></td>
+					</tr>
+					<% } %>
+
+
+				</table>
+				<p>ALUMNOS ATENDIDOS POR CURSOS:</p>
+				<table class="table table-bordered " style="font-size: 12px;" >
+					<thead >
+					<tr style="border-top: 1px solid #C8C8C8 !important;">
+						<th>1ro</th>
+						<th>2do</th>
+						<th>3ro</th>
+						<th>4to</th>
+						<th>5to</th>
+						<th>6to</th>
+						<th>7mo</th>
+						<th>8vo</th>
+						<th>9no</th>
+						<th>10mo</th>
+						<th>1ro Bach</th>
+						<th>2do Bach</th>
+						<th>3ro Bach</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<% for(var i= 0; i < nivelAtencion.length ; i++) {%>
+						<td><%- nivelAtencion[i] %></td>
+						<% } %>
+					</tr>
+					</tbody>
+				</table>
+				<div class="footerPDF">
+					<%- usuario.nombre%>
+				</div>
+				<div class="html2pdf__page-break"></div>
+			</div>
+		</div>
+    </div>
+</div><!-- Apertura en el header -->
+
+
+
+
+
+<% include componentes/footer %>
+
+<script>
+	var datos = {
+	  labels: ['1ro','2do','3ro','4to','5to','6to','7mo','8vo','9no',
+		  		'10mo','1ro Bach','2do Bach','3ro Bach']  ,
+	  datasets: [{
+	      data: [
+			<%= nivelAtencion[0] %>,
+			<%= nivelAtencion[1] %>,
+			<%= nivelAtencion[2] %>,
+			<%= nivelAtencion[3] %>,
+			<%= nivelAtencion[4] %>,
+			<%= nivelAtencion[5] %>,
+			<%= nivelAtencion[6] %>,
+			<%= nivelAtencion[7] %>,
+			<%= nivelAtencion[8] %>,
+			<%= nivelAtencion[9] %>,
+			<%= nivelAtencion[10] %>,
+			<%= nivelAtencion[11] %>,
+			<%= nivelAtencion[12] %>
+          ],
+          backgroundColor: [
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1',
+              '#2DCDC1'
+          ]
+	  }]
+	};
+    var canvasBar = document.getElementById("myChart").getContext('2d');
+    window.bar = new Chart(canvasBar, {
+      type: 'bar',
+      data: datos,
+        options:{
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Estudiantes atendidos (mes actual)',
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            legend: {
+                display: false,
+                position: 'right',
+                labels: {
+                    fontColor: 'black',
+                    fontSize: 11,
+                    boxWidth: 10,
+                }
+
+            },
+			elements : {
+                rectangle : {
+                    borderWidth: 1,
+					boderColor: 'rgb(0,255,0)',
+					borderSkipped : 'bottom'
+				}
+			}
+
+        }
+	});
+    function imprimir() {
+        var element = document.getElementById('informeMedico');
+        element.style.display = 'block';
+        html2pdf(element, {
+            margin: 0.5,
+            filename: 'informe.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                dpi: 200,
+                letterRendering: true
+            },
+            jsPDF: {
+                unit: 'in',
+                format: 'letter',
+                orientation: 'portrait'
+            }
+        });
+        element.style.display = "none";
+        success('fa fa-download', 'Informe descargado');
+    };
+
+    if(<%- imprimir %>) {
+        setTimeout(imprimir(),3000) ;
+    }
+
+</script>
